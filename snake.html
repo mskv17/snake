@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <title>snake by jovis</title>
+    <style type="text/css" media="all">
+        body{
+            text-align: center;
+        }
+        span{
+            color: red;
+        }
+        button:hover{
+            border: solid 2px black;
+        }
+       button{
+           width: 50px;
+           height: 50px;
+       }
+       div{
+         margin: 10px;
+         
+    
+       }
+    </style>
+    
+</head>
+<body>
+    <h1><u>
+        
+    snake game</u></h1>
+    <h2>score:<span id="span"></span></h2>
+    
+    
+    <canvas id="canvas" width="400" height="400">
+        
+    </canvas>
+    
+    <h1>game status:<span id="game-statuse"></span></h1>
+    <div>
+        
+
+    <button id="up"onclick="up()" type="button">U</button>
+    
+    <button id="doun"onclick="dw()" type="button">D</button>
+    <button id="right" onclick="ri()"type="button">R</button>
+    <button id="left"onclick="le()" type="submit">L</button>
+    
+    </div>
+    
+    
+    
+    
+    <script type="text/javascript" charset="utf-8">
+        //variable gemerate
+        var cvs=document.getElementById("canvas").getContext("2d")
+        var snakex=80;
+        var snakey=100;
+        var nsnakex=0;
+        var nsnakey=0;
+        var fposx=160;
+        var fposy=200;
+        var snakew=20;
+        var snakeh=20;
+        var snakesize=[];
+        var snakesizec=1;
+        var score=0;
+        var gamestatuse="redy";
+        
+        
+        
+        
+        
+        //onlode function
+        
+        window.onload= function (){
+            //document.addEventListener("keydown",inputc);
+    g=   setInterval(maingame,500);
+        }
+        
+        
+        
+        
+        
+        
+        //main function
+        function maingame(){
+            document.getElementById("game-statuse").innerHTML=gamestatuse;
+            document.getElementById("span").innerHTML=score;
+            
+            //movment
+            snakex+=nsnakex
+            snakey+=nsnakey
+            //movment controle
+            
+            if (snakex>400){
+                snakex=0;
+            }
+            if(snakex<0){
+                snakex=400;
+            }
+            if(snakey<0){
+                snakey=400;
+            }
+            if(snakey>400){
+                snakey=0
+            }
+            
+           // game area
+           
+           
+           
+           
+           //background color
+           
+           cvs.fillStyle="black";
+           cvs.fillRect(0,0,400,400);
+           //gridline
+           for (var cl = 0; cl < 400; cl+=20){
+           cvs.moveTo(cl,0);
+           cvs.lineTo(cl,400);
+           cvs.stroke();
+}
+           for (var vl=0; vl<400; vl+=20){
+           cvs.moveTo(0,vl);
+           cvs.lineTo(400,vl);
+           cvs.stroke();
+           }
+           cvs.strokeStyle="grey";
+           cvs.stroke();
+           //snake
+           cvs.fillStyle="yellow";
+           //cvs.fillRect(snakex,snakey,snakew,snakeh);
+           for(var i=0;i<snakesize.length;i++){
+           cvs.fillRect(snakesize[i].x,snakesize[i].y,20,20);
+           
+           if (snakex==snakesize[i].x && snakey==snakesize[i].y&&snakesizec>1){
+              gamestatuse="game over";
+              clearInterval(g); 
+           }
+
+           }
+           //fruit
+           cvs.fillStyle="red";
+           cvs.fillRect(fposx,fposy,20,20);
+           //if snake eat fruit
+           if (snakex==fposx&&snakey==fposy){
+               snakesizec++;
+               score+=10;
+           fposx=Math.floor(Math.random()*20)*20;
+           fposy=Math.floor(Math.random()*20)*20;
+           //snakew+=20;
+           snakeh+=20;
+           }
+           snakesize.push({x:snakex,y:snakey});
+           while(snakesize.length>snakesizec){
+               snakesize.shift();
+           }
+        }
+        
+        
+        
+        
+        //controle fanction
+      /* function inputc(e){
+           console.log(e.keycode) ;
+           switch (e.keycode){
+             case 38:
+                 snakey-=20;
+                 break;
+             case 40:
+                 snakey+=20;
+                 break;
+             case 39:
+                 snakex+=20;
+                 break;
+             case 37:
+                 snakex-=20;
+                 break;
+           }
+        }*/
+        function up (){
+            nsnakey-=20;
+            nsnakex=0;
+            gamestatuse="game stated";
+        }
+        function dw (){
+            nsnakey+=20;
+            nsnakex=0;
+            gamestatuse="game stated";
+        }
+        function ri (){
+            nsnakex+=20;
+            nsnakey=0;
+            gamestatuse="game stated";
+        }
+        function le (){
+            nsnakex-=20;
+            nsnakey=0
+            gamestatuse="game stated";
+        }
+        
+    </script>
+</body>
+</html>
